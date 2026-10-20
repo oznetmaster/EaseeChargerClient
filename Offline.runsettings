@@ -1,0 +1,4 @@
+<RunSettings>
+  <RunConfiguration><ResultsDirectory>TestResults</ResultsDirectory></RunConfiguration>
+  <NUnit><NumberOfTestWorkers>0</NumberOfTestWorkers><ExplicitMode>None</ExplicitMode></NUnit>
+</RunSettings>

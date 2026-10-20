@@ -1,0 +1,19 @@
+name: API source consistency
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  generated:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: dotnet restore EaseeChargerClient.slnx
+      - shell: pwsh
+        run: ./tools/Regenerate.ps1
+      - run: git diff --exit-code -- EaseeChargerClient/Generated api/coverage.json

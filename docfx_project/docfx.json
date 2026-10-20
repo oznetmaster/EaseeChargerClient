@@ -1,0 +1,64 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "..",
+          "files": [
+            "EaseeChargerClient/EaseeChargerClient.csproj",
+            "EaseeChargerClient.Hosting/EaseeChargerClient.Hosting.csproj"
+          ]
+        }
+      ],
+      "properties": {
+        "TargetFramework": "net472"
+      },
+      "dest": "api",
+      "disableGitFeatures": true
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "index.md",
+          "toc.yml",
+          "api/**.yml"
+        ]
+      },
+      {
+        "src": "..",
+        "files": [
+          "README.md",
+          "CHANGELOG.md",
+          "RELEASE-NOTES.md",
+          "DOCUMENTATION.md",
+          "PUBLISHING.md"
+        ],
+        "dest": "guides"
+      }
+    ],
+    "resource": [
+      {
+        "src": "..",
+        "files": [
+          "api/easee-cloud-api.json",
+          "api/coverage.json",
+          "api/model-contract-evidence.json",
+          "api/signalr-stream.md"
+        ],
+        "dest": "guides"
+      }
+    ],
+    "globalMetadata": {
+      "_appTitle": "EaseeChargerClient",
+      "_appName": "EaseeChargerClient",
+      "_enableSearch": true
+    },
+    "output": "_site",
+    "template": [
+      "default",
+      "modern"
+    ]
+  }
+}

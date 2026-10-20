@@ -1,0 +1,1029 @@
+{
+  "source": "https://developer.easee.com/openapi/easee-cloud-api.json",
+  "sha256": "512a60fa502a70d92f7db2aa9d1855b40ad86431660f149bb216767325b66b08",
+  "operationCount": 168,
+  "excludedDeprecated": [
+    "Account_GetFavorites",
+    "Account_GetChargerFavorites",
+    "Account_AddChargerFavoriteByPin",
+    "Account_RemoveChargerFavorite",
+    "Charger_GetChargePlan",
+    "Charger_AddChargePlan",
+    "Charger_DeleteChargePlan",
+    "Charger_GetWeeklyChargeSchedule",
+    "Charger_AddWeeklyChargeSchedule",
+    "Charger_DeleteWeeklyChargeSchedule",
+    "Charger_SetChargeScheduleFeatures",
+    "Charger_ToggleCharging"
+  ],
+  "operations": [
+    {
+      "operationId": "Account_Authenticate",
+      "method": "AccountAuthenticateAsync",
+      "httpMethod": "POST",
+      "path": "/api/accounts/login"
+    },
+    {
+      "operationId": "Account_RefreshToken",
+      "method": "AccountRefreshTokenAsync",
+      "httpMethod": "POST",
+      "path": "/api/accounts/refresh_token"
+    },
+    {
+      "operationId": "Account_InvalidateToken",
+      "method": "AccountInvalidateTokenAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/accounts/{accountId}/invalidate_token"
+    },
+    {
+      "operationId": "Account_GetProfile",
+      "method": "AccountGetProfileAsync",
+      "httpMethod": "GET",
+      "path": "/api/accounts/profile"
+    },
+    {
+      "operationId": "Account_GetProductFavorites",
+      "method": "AccountGetProductFavoritesAsync",
+      "httpMethod": "GET",
+      "path": "/api/accounts/products"
+    },
+    {
+      "operationId": "Charger_AddChargerToAccount",
+      "method": "ChargerAddChargerToAccountAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/pair"
+    },
+    {
+      "operationId": "Charger_RemoveChargerFromAccount",
+      "method": "ChargerRemoveChargerFromAccountAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/unpair"
+    },
+    {
+      "operationId": "Charger_SetOperator",
+      "method": "ChargerSetOperatorAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/partners"
+    },
+    {
+      "operationId": "Charger_GetChargerOperator",
+      "method": "ChargerGetChargerOperatorAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/{chargerId}/partners"
+    },
+    {
+      "operationId": "Charger_RemoveChargerOperator",
+      "method": "ChargerRemoveChargerOperatorAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/chargers/{chargerId}/partners/{partnerId}"
+    },
+    {
+      "operationId": "Charger_DeleteUserChargerAccess",
+      "method": "ChargerDeleteUserChargerAccessAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/chargers/{chargerId}/permission"
+    },
+    {
+      "operationId": "Charger_GetChargerUsers",
+      "method": "ChargerGetChargerUsersAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/{chargerId}/permission"
+    },
+    {
+      "operationId": "Charger_CreateChargerInvitationLink",
+      "method": "ChargerCreateChargerInvitationLinkAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/invitations"
+    },
+    {
+      "operationId": "Charger_GetChargerInvitationPreview",
+      "method": "ChargerGetChargerInvitationPreviewAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/{chargerId}/invitations/{invitationId}"
+    },
+    {
+      "operationId": "Charger_RemoveChargerInvitationLink",
+      "method": "ChargerRemoveChargerInvitationLinkAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/chargers/{chargerId}/invitations/{invitationId}"
+    },
+    {
+      "operationId": "Charger_AcceptChargerInvitationLink",
+      "method": "ChargerAcceptChargerInvitationLinkAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/invitations/{invitationId}/accept"
+    },
+    {
+      "operationId": "Charger_ResendChargerInvitationLink",
+      "method": "ChargerResendChargerInvitationLinkAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/invitations/{invitationId}/resend_email"
+    },
+    {
+      "operationId": "Charger_SetChargerAccessLevel",
+      "method": "ChargerSetChargerAccessLevelAsync",
+      "httpMethod": "PUT",
+      "path": "/api/chargers/{chargerId}/access"
+    },
+    {
+      "operationId": "Charger_LinkCharger",
+      "method": "ChargerLinkChargerAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/chargers/{chargerId}/access"
+    },
+    {
+      "operationId": "Site_SetSiteOwner",
+      "method": "SiteSetSiteOwnerAsync",
+      "httpMethod": "POST",
+      "path": "/api/sites/{siteId}/owner"
+    },
+    {
+      "operationId": "Site_GetSiteUsers",
+      "method": "SiteGetSiteUsersAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/users"
+    },
+    {
+      "operationId": "Site_CreateSiteInvitationLink",
+      "method": "SiteCreateSiteInvitationLinkAsync",
+      "httpMethod": "POST",
+      "path": "/api/sites/{siteId}/invitations"
+    },
+    {
+      "operationId": "Site_ResendSiteInvitationLink",
+      "method": "SiteResendSiteInvitationLinkAsync",
+      "httpMethod": "POST",
+      "path": "/api/sites/{siteId}/invitations/{invitationId}/resend_email"
+    },
+    {
+      "operationId": "Site_GetSiteInvitationPreview",
+      "method": "SiteGetSiteInvitationPreviewAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/invitations/{invitationId}"
+    },
+    {
+      "operationId": "Site_DeleteSiteInvitation",
+      "method": "SiteDeleteSiteInvitationAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/sites/{siteId}/invitations/{invitationId}"
+    },
+    {
+      "operationId": "Site_AcceptSiteInvitationLink",
+      "method": "SiteAcceptSiteInvitationLinkAsync",
+      "httpMethod": "POST",
+      "path": "/api/sites/{siteId}/invitations/{invitationId}/accept"
+    },
+    {
+      "operationId": "Site_DeleteSitePermission",
+      "method": "SiteDeleteSitePermissionAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/sites/{siteId}/permission"
+    },
+    {
+      "operationId": "Site_UpdateSitePermission",
+      "method": "SiteUpdateSitePermissionAsync",
+      "httpMethod": "PUT",
+      "path": "/api/sites/{siteId}/permission"
+    },
+    {
+      "operationId": "Site_DeleteSiteUser",
+      "method": "SiteDeleteSiteUserAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/sites/{siteId}/users/{userId}"
+    },
+    {
+      "operationId": "Site_SetAccessLevel",
+      "method": "SiteSetAccessLevelAsync",
+      "httpMethod": "PUT",
+      "path": "/api/sites/{siteId}/access"
+    },
+    {
+      "operationId": "Site_SetAccessLevelForChargers",
+      "method": "SiteSetAccessLevelForChargersAsync",
+      "httpMethod": "PUT",
+      "path": "/api/sites/{siteId}/chargers/level_of_access"
+    },
+    {
+      "operationId": "Site_DeleteAccessLevelForChargers",
+      "method": "SiteDeleteAccessLevelForChargersAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/sites/{siteId}/chargers/level_of_access"
+    },
+    {
+      "operationId": "Site_RequestSiteAccess",
+      "method": "SiteRequestSiteAccessAsync",
+      "httpMethod": "POST",
+      "path": "/api/sites/{siteId}/request_access"
+    },
+    {
+      "operationId": "SiteIntegration_SetAccessLevel",
+      "method": "SiteIntegrationSetAccessLevelAsync",
+      "httpMethod": "PUT",
+      "path": "/api/sites/integration/{siteId}/access"
+    },
+    {
+      "operationId": "EaseeKeys_GetEaseeKeys",
+      "method": "EaseeKeysGetEaseeKeysAsync",
+      "httpMethod": "GET",
+      "path": "/api/accounts/easeekeys"
+    },
+    {
+      "operationId": "EaseeKeys_AddEaseeKey",
+      "method": "EaseeKeysAddEaseeKeyAsync",
+      "httpMethod": "POST",
+      "path": "/api/accounts/easeekeys"
+    },
+    {
+      "operationId": "EaseeKeys_GetUserIdByKey",
+      "method": "EaseeKeysGetUserIdByKeyAsync",
+      "httpMethod": "GET",
+      "path": "/api/accounts/userIdByKey/{key}"
+    },
+    {
+      "operationId": "EaseeKeys_GetEaseeKeysForUser",
+      "method": "EaseeKeysGetEaseeKeysForUserAsync",
+      "httpMethod": "GET",
+      "path": "/api/accounts/keysForUser/{userId}"
+    },
+    {
+      "operationId": "EaseeKeys_AddEaseeKeyForUser",
+      "method": "EaseeKeysAddEaseeKeyForUserAsync",
+      "httpMethod": "POST",
+      "path": "/api/accounts/keyForUser/{userId}"
+    },
+    {
+      "operationId": "EaseeKeys_UpdateEaseeKey",
+      "method": "EaseeKeysUpdateEaseeKeyAsync",
+      "httpMethod": "PUT",
+      "path": "/api/accounts/easeekeys/{key}"
+    },
+    {
+      "operationId": "EaseeKeys_DeleteEaseeKey",
+      "method": "EaseeKeysDeleteEaseeKeyAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/accounts/easeekeys/{key}"
+    },
+    {
+      "operationId": "AuthorizeCharging_StartCharging",
+      "method": "AuthorizeChargingStartChargingAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/commands/start_charging"
+    },
+    {
+      "operationId": "GetChargersSchedules",
+      "method": "GetChargersSchedulesAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/{chargerId}/schedules"
+    },
+    {
+      "operationId": "PostChargersSchedulesDelayed",
+      "method": "PostChargersSchedulesDelayedAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/schedules/delayed"
+    },
+    {
+      "operationId": "GetChargersSchedulesDelayed",
+      "method": "GetChargersSchedulesDelayedAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/{chargerId}/schedules/delayed"
+    },
+    {
+      "operationId": "DeleteChargersSchedulesDelayed",
+      "method": "DeleteChargersSchedulesDelayedAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/chargers/{chargerId}/schedules/delayed"
+    },
+    {
+      "operationId": "PostChargersSchedulesDelayedEnable",
+      "method": "PostChargersSchedulesDelayedEnableAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/schedules/delayed/enable"
+    },
+    {
+      "operationId": "PostChargersSchedulesDelayedDisable",
+      "method": "PostChargersSchedulesDelayedDisableAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/schedules/delayed/disable"
+    },
+    {
+      "operationId": "PostChargersSchedulesDaily",
+      "method": "PostChargersSchedulesDailyAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/schedules/daily"
+    },
+    {
+      "operationId": "GetChargersSchedulesDaily",
+      "method": "GetChargersSchedulesDailyAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/{chargerId}/schedules/daily"
+    },
+    {
+      "operationId": "DeleteChargersSchedulesDaily",
+      "method": "DeleteChargersSchedulesDailyAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/chargers/{chargerId}/schedules/daily"
+    },
+    {
+      "operationId": "PostChargersSchedulesDailyEnable",
+      "method": "PostChargersSchedulesDailyEnableAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/schedules/daily/enable"
+    },
+    {
+      "operationId": "PostChargersSchedulesDailyDisable",
+      "method": "PostChargersSchedulesDailyDisableAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/schedules/daily/disable"
+    },
+    {
+      "operationId": "PostChargersSchedulesWeekly",
+      "method": "PostChargersSchedulesWeeklyAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/schedules/weekly"
+    },
+    {
+      "operationId": "GetChargersSchedulesWeekly",
+      "method": "GetChargersSchedulesWeeklyAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/{chargerId}/schedules/weekly"
+    },
+    {
+      "operationId": "DeleteChargersSchedulesWeekly",
+      "method": "DeleteChargersSchedulesWeeklyAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/chargers/{chargerId}/schedules/weekly"
+    },
+    {
+      "operationId": "PostChargersSchedulesWeeklyEnable",
+      "method": "PostChargersSchedulesWeeklyEnableAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/schedules/weekly/enable"
+    },
+    {
+      "operationId": "PostChargersSchedulesWeeklyDisable",
+      "method": "PostChargersSchedulesWeeklyDisableAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/schedules/weekly/disable"
+    },
+    {
+      "operationId": "ChargingSessionsCharger_GetTotalKwhAmountByCharger",
+      "method": "ChargingSessionsChargerGetTotalKwhAmountByChargerAsync",
+      "httpMethod": "GET",
+      "path": "/api/sessions/charger/{chargerId}/total/{from}/{to}"
+    },
+    {
+      "operationId": "ChargingSessionsCharger_GetChargerSessionsbycharger",
+      "method": "ChargingSessionsChargerGetChargerSessionsbychargerAsync",
+      "httpMethod": "GET",
+      "path": "/api/sessions/charger/{chargerId}/sessions/{from}/{to}"
+    },
+    {
+      "operationId": "ChargingSessionsCharger_GetLimitChargerSessionsbycharger",
+      "method": "ChargingSessionsChargerGetLimitChargerSessionsbychargerAsync",
+      "httpMethod": "GET",
+      "path": "/api/sessions/charger/{chargerId}/sessions/descending"
+    },
+    {
+      "operationId": "ChargingSessionsCharger_GetYearlySummaryByCharger",
+      "method": "ChargingSessionsChargerGetYearlySummaryByChargerAsync",
+      "httpMethod": "GET",
+      "path": "/api/sessions/charger/{chargerId}/yearly"
+    },
+    {
+      "operationId": "ChargingSessionsCharger_GetMonthlySummaryByCharger",
+      "method": "ChargingSessionsChargerGetMonthlySummaryByChargerAsync",
+      "httpMethod": "GET",
+      "path": "/api/sessions/charger/{chargerId}/monthly"
+    },
+    {
+      "operationId": "ChargingSessionsCharger_GetDailySummaryByCharger",
+      "method": "ChargingSessionsChargerGetDailySummaryByChargerAsync",
+      "httpMethod": "GET",
+      "path": "/api/sessions/charger/{chargerId}/daily"
+    },
+    {
+      "operationId": "ChargingSessionsCharger_GetHourlySummaryByCharger",
+      "method": "ChargingSessionsChargerGetHourlySummaryByChargerAsync",
+      "httpMethod": "GET",
+      "path": "/api/sessions/charger/{chargerId}/hourly"
+    },
+    {
+      "operationId": "ChargingSessionsUser_GetTotalKwhAmountByUser",
+      "method": "ChargingSessionsUserGetTotalKwhAmountByUserAsync",
+      "httpMethod": "GET",
+      "path": "/api/sessions/user/{userId}/total/{from}/{to}"
+    },
+    {
+      "operationId": "ChargingSessionsUser_GetChargerSessionsByUser",
+      "method": "ChargingSessionsUserGetChargerSessionsByUserAsync",
+      "httpMethod": "GET",
+      "path": "/api/sessions/user/{userId}/sessions/{from}/{to}"
+    },
+    {
+      "operationId": "ChargingSessionsUser_GetYearlySummaryByUser",
+      "method": "ChargingSessionsUserGetYearlySummaryByUserAsync",
+      "httpMethod": "GET",
+      "path": "/api/sessions/user/{userId}/yearly"
+    },
+    {
+      "operationId": "ChargingSessionsUser_GetMonthlySummaryByUser",
+      "method": "ChargingSessionsUserGetMonthlySummaryByUserAsync",
+      "httpMethod": "GET",
+      "path": "/api/sessions/user/{userId}/monthly"
+    },
+    {
+      "operationId": "ChargingSessionsUser_GetWeeklySummaryByUser",
+      "method": "ChargingSessionsUserGetWeeklySummaryByUserAsync",
+      "httpMethod": "GET",
+      "path": "/api/sessions/user/{userId}/weekly"
+    },
+    {
+      "operationId": "ChargingSessionsUser_GetChargeSessionBreakdownByUser",
+      "method": "ChargingSessionsUserGetChargeSessionBreakdownByUserAsync",
+      "httpMethod": "GET",
+      "path": "/api/sessions/user/{userId}/breakdown/{from}/{to}"
+    },
+    {
+      "operationId": "Chargers_GetLastUpdatedChargeSession",
+      "method": "ChargersGetLastUpdatedChargeSessionAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/{chargerId}/sessions/latest"
+    },
+    {
+      "operationId": "Chargers_GetOngoingSessionDetails",
+      "method": "ChargersGetOngoingSessionDetailsAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/{chargerId}/sessions/ongoing"
+    },
+    {
+      "operationId": "Chargers_GetSpecificFinalChargingSession",
+      "method": "ChargersGetSpecificFinalChargingSessionAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/{chargerId}/final/{sequenceId}"
+    },
+    {
+      "operationId": "Chargers_DeleteChargingSession",
+      "method": "ChargersDeleteChargingSessionAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/chargers/{chargerId}/sessions/{sequenceId}"
+    },
+    {
+      "operationId": "ChargingSessionsSite_GetYearlySummaryBySite",
+      "method": "ChargingSessionsSiteGetYearlySummaryBySiteAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/yearly"
+    },
+    {
+      "operationId": "ChargingSessionsSite_GetMonthlySummaryBySite",
+      "method": "ChargingSessionsSiteGetMonthlySummaryBySiteAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/monthly"
+    },
+    {
+      "operationId": "ChargingSessionsSite_GetDailySummaryBySite",
+      "method": "ChargingSessionsSiteGetDailySummaryBySiteAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/daily"
+    },
+    {
+      "operationId": "ChargingSessionsSite_GetWeeklySummaryBySite",
+      "method": "ChargingSessionsSiteGetWeeklySummaryBySiteAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/weekly"
+    },
+    {
+      "operationId": "ChargingSessionsSite_GetChargeSessionBreakdownByUser",
+      "method": "ChargingSessionsSiteGetChargeSessionBreakdownByUserAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/breakdown/{from}/{to}"
+    },
+    {
+      "operationId": "ChargingSessionsSite_GetChargingSessionsBySiteId",
+      "method": "ChargingSessionsSiteGetChargingSessionsBySiteIdAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/detailed"
+    },
+    {
+      "operationId": "Partners_GetOcppConfig",
+      "method": "PartnersGetOcppConfigAsync",
+      "httpMethod": "GET",
+      "path": "/api/cloud-ocpp/partners/{partnerId}"
+    },
+    {
+      "operationId": "Partners_SaveOcppConfig",
+      "method": "PartnersSaveOcppConfigAsync",
+      "httpMethod": "POST",
+      "path": "/api/cloud-ocpp/partners/{partnerId}"
+    },
+    {
+      "operationId": "Partners_GetAllCustomEndpoints",
+      "method": "PartnersGetAllCustomEndpointsAsync",
+      "httpMethod": "GET",
+      "path": "/api/cloud-ocpp/partners/{partnerId}/sites"
+    },
+    {
+      "operationId": "Partners_GetCustomEndpointsOnSite",
+      "method": "PartnersGetCustomEndpointsOnSiteAsync",
+      "httpMethod": "GET",
+      "path": "/api/cloud-ocpp/partners/{partnerId}/sites/{siteId}"
+    },
+    {
+      "operationId": "Partners_SetCustomEndpoint",
+      "method": "PartnersSetCustomEndpointAsync",
+      "httpMethod": "POST",
+      "path": "/api/cloud-ocpp/partners/{partnerId}/sites/{siteId}"
+    },
+    {
+      "operationId": "Partners_DeleteCustomEndpoint",
+      "method": "PartnersDeleteCustomEndpointAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/cloud-ocpp/partners/{partnerId}/sites/{siteId}"
+    },
+    {
+      "operationId": "charger_reboot",
+      "method": "ChargerRebootAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/commands/reboot"
+    },
+    {
+      "operationId": "charger_set_cable_lock_state",
+      "method": "ChargerSetCableLockStateAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/commands/lock_state"
+    },
+    {
+      "operationId": "charger_update_firmware",
+      "method": "ChargerUpdateFirmwareAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/commands/update_firmware"
+    },
+    {
+      "operationId": "charger_enable_smart_charging",
+      "method": "ChargerEnableSmartChargingAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/commands/smart_charging"
+    },
+    {
+      "operationId": "charger_stop_charging",
+      "method": "ChargerStopChargingAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/commands/stop_charging"
+    },
+    {
+      "operationId": "charger_scan_wifi",
+      "method": "ChargerScanWifiAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/commands/scan_wifi"
+    },
+    {
+      "operationId": "charger_set_wifi_configuration",
+      "method": "ChargerSetWifiConfigurationAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/commands/set_wifi_config"
+    },
+    {
+      "operationId": "charger_set_dynamic_charger_current",
+      "method": "ChargerSetDynamicChargerCurrentAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/commands/set_dynamic_charger_current"
+    },
+    {
+      "operationId": "charger_set_phase_mode",
+      "method": "ChargerSetPhaseModeAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/commands/set_phase_mode"
+    },
+    {
+      "operationId": "charger_pair_rfid_tag",
+      "method": "ChargerPairRfidTagAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/commands/set_rfid_pairing_mode_async"
+    },
+    {
+      "operationId": "getobservations",
+      "method": "GetobservationsAsync",
+      "httpMethod": "GET",
+      "path": "/state/{serialNumber}/observations"
+    },
+    {
+      "operationId": "Charger_GetAll",
+      "method": "ChargerGetAllAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers"
+    },
+    {
+      "operationId": "Charger_GetChargerById",
+      "method": "ChargerGetChargerByIdAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/{chargerId}"
+    },
+    {
+      "operationId": "Charger_GetChargerDetails",
+      "method": "ChargerGetChargerDetailsAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/{chargerId}/details"
+    },
+    {
+      "operationId": "Charger_GetChargerSite",
+      "method": "ChargerGetChargerSiteAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/{chargerId}/site"
+    },
+    {
+      "operationId": "Charger_GetCachedChargerConfig",
+      "method": "ChargerGetCachedChargerConfigAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/{chargerId}/config"
+    },
+    {
+      "operationId": "Charger_GetHourlyAggregatedUsage",
+      "method": "ChargerGetHourlyAggregatedUsageAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/{chargerId}/usage/hourly/{from}/{to}"
+    },
+    {
+      "operationId": "Charger_SetChargerSetting",
+      "method": "ChargerSetChargerSettingAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/settings"
+    },
+    {
+      "operationId": "Charger_PauseSession",
+      "method": "ChargerPauseSessionAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/commands/pause_charging"
+    },
+    {
+      "operationId": "Charger_ResumeSession",
+      "method": "ChargerResumeSessionAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/commands/resume_charging"
+    },
+    {
+      "operationId": "Charger_OverrideSchedule",
+      "method": "ChargerOverrideScheduleAsync",
+      "httpMethod": "POST",
+      "path": "/api/chargers/{chargerId}/commands/override_schedule"
+    },
+    {
+      "operationId": "ChargeSession_ExportConsumption",
+      "method": "ChargeSessionExportConsumptionAsync",
+      "httpMethod": "GET",
+      "path": "/api/sessions/export/{siteId}/{category}/{from}/{to}"
+    },
+    {
+      "operationId": "Equalizer_GetEqualizer",
+      "method": "EqualizerGetEqualizerAsync",
+      "httpMethod": "GET",
+      "path": "/api/equalizers/{equalizerId}"
+    },
+    {
+      "operationId": "Equalizer_GetDetailedEqualizer",
+      "method": "EqualizerGetDetailedEqualizerAsync",
+      "httpMethod": "GET",
+      "path": "/api/equalizers/{equalizerId}/details"
+    },
+    {
+      "operationId": "Equalizer_GeEqualizerConfig",
+      "method": "EqualizerGeEqualizerConfigAsync",
+      "httpMethod": "GET",
+      "path": "/api/equalizers/{equalizerId}/config"
+    },
+    {
+      "operationId": "Equalizer_GetEqualizerSite",
+      "method": "EqualizerGetEqualizerSiteAsync",
+      "httpMethod": "GET",
+      "path": "/api/equalizers/{equalizerId}/site"
+    },
+    {
+      "operationId": "Equalizer_Reboot",
+      "method": "EqualizerRebootAsync",
+      "httpMethod": "POST",
+      "path": "/api/equalizers/{equalizerId}/commands/reboot"
+    },
+    {
+      "operationId": "Equalizer_ConfigureMeterType",
+      "method": "EqualizerConfigureMeterTypeAsync",
+      "httpMethod": "POST",
+      "path": "/api/equalizers/{equalizerId}/commands/configure_meter_type"
+    },
+    {
+      "operationId": "Equalizer_ConfigureAllocatedCurrent",
+      "method": "EqualizerConfigureAllocatedCurrentAsync",
+      "httpMethod": "POST",
+      "path": "/api/equalizers/{equalizerId}/commands/configure_max_allocated_current"
+    },
+    {
+      "operationId": "Equalizer_UpdateFirmware",
+      "method": "EqualizerUpdateFirmwareAsync",
+      "httpMethod": "POST",
+      "path": "/api/equalizers/{equalizerId}/commands/update_firmware"
+    },
+    {
+      "operationId": "LifetimeEnergyReporting_GetChargerById",
+      "method": "LifetimeEnergyReportingGetChargerByIdAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/lifetime-energy/{chargerId}/all"
+    },
+    {
+      "operationId": "LifetimeEnergyReporting_GetHourlyForPeriod",
+      "method": "LifetimeEnergyReportingGetHourlyForPeriodAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/lifetime-energy/{chargerId}/hourly"
+    },
+    {
+      "operationId": "LifetimeEnergyReporting_GetDailyForPeriod",
+      "method": "LifetimeEnergyReportingGetDailyForPeriodAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/lifetime-energy/{chargerId}/daily"
+    },
+    {
+      "operationId": "LifetimeEnergyReporting_GetMonthlyForPeriod",
+      "method": "LifetimeEnergyReportingGetMonthlyForPeriodAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/lifetime-energy/{chargerId}/monthly"
+    },
+    {
+      "operationId": "LifetimeEnergyReporting_GetYearlyForPeriod",
+      "method": "LifetimeEnergyReportingGetYearlyForPeriodAsync",
+      "httpMethod": "GET",
+      "path": "/api/chargers/lifetime-energy/{chargerId}/yearly"
+    },
+    {
+      "operationId": "LifetimeEnergyReporting_Configure",
+      "method": "LifetimeEnergyReportingConfigureAsync",
+      "httpMethod": "PUT",
+      "path": "/api/chargers/lifetime-energy/{chargerId}/configure"
+    },
+    {
+      "operationId": "Resources_GetAllCountries",
+      "method": "ResourcesGetAllCountriesAsync",
+      "httpMethod": "GET",
+      "path": "/api/resources/countries"
+    },
+    {
+      "operationId": "Resources_GetActiveCountries",
+      "method": "ResourcesGetActiveCountriesAsync",
+      "httpMethod": "GET",
+      "path": "/api/resources/countries/active"
+    },
+    {
+      "operationId": "Resources_GetCurrencies",
+      "method": "ResourcesGetCurrenciesAsync",
+      "httpMethod": "GET",
+      "path": "/api/resources/currencies"
+    },
+    {
+      "operationId": "Resources_GetObservationProperties",
+      "method": "ResourcesGetObservationPropertiesAsync",
+      "httpMethod": "GET",
+      "path": "/api/resources/observation_properties"
+    },
+    {
+      "operationId": "Site_GetAll",
+      "method": "SiteGetAllAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites"
+    },
+    {
+      "operationId": "Site_GetSiteById",
+      "method": "SiteGetSiteByIdAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}"
+    },
+    {
+      "operationId": "Site_UpdateSitePATCH",
+      "method": "SiteUpdateSitePATCHAsync",
+      "httpMethod": "PATCH",
+      "path": "/api/sites/{siteId}"
+    },
+    {
+      "operationId": "Site_DeleteSite",
+      "method": "SiteDeleteSiteAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/sites/{siteId}"
+    },
+    {
+      "operationId": "Site_GetSiteState",
+      "method": "SiteGetSiteStateAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/state"
+    },
+    {
+      "operationId": "Site_GetEaseeControlUiAccessRequest",
+      "method": "SiteGetEaseeControlUiAccessRequestAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/easee-control-access"
+    },
+    {
+      "operationId": "Site_RequestControlAccess",
+      "method": "SiteRequestControlAccessAsync",
+      "httpMethod": "POST",
+      "path": "/api/sites/{siteId}/easee-control-access/request"
+    },
+    {
+      "operationId": "Site_DisableControlAccess",
+      "method": "SiteDisableControlAccessAsync",
+      "httpMethod": "POST",
+      "path": "/api/sites/{siteId}/easee-control-access/disable"
+    },
+    {
+      "operationId": "Site_SaveChargingPrice",
+      "method": "SiteSaveChargingPriceAsync",
+      "httpMethod": "POST",
+      "path": "/api/sites/{siteId}/price"
+    },
+    {
+      "operationId": "Site_GetChargers",
+      "method": "SiteGetChargersAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/chargers"
+    },
+    {
+      "operationId": "Site_AttachChargersToBackPlates",
+      "method": "SiteAttachChargersToBackPlatesAsync",
+      "httpMethod": "PUT",
+      "path": "/api/sites/{siteId}/chargers"
+    },
+    {
+      "operationId": "Site_UpdateChargers",
+      "method": "SiteUpdateChargersAsync",
+      "httpMethod": "PUT",
+      "path": "/api/sites/{siteId}/circuits/{circuitId}/chargers"
+    },
+    {
+      "operationId": "Site_RemoveEqualizerFromSite",
+      "method": "SiteRemoveEqualizerFromSiteAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/sites/{siteId}/equalizers/{equalizerId}"
+    },
+    {
+      "operationId": "Site_GetChargerEnergyBySite",
+      "method": "SiteGetChargerEnergyBySiteAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/energy"
+    },
+    {
+      "operationId": "Site_GetCircuitAttachedSite",
+      "method": "SiteGetCircuitAttachedSiteAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/circuits/{circuitId}/{pinCode}"
+    },
+    {
+      "operationId": "Site_UpdateCircuits",
+      "method": "SiteUpdateCircuitsAsync",
+      "httpMethod": "PUT",
+      "path": "/api/sites/{siteId}/circuits"
+    },
+    {
+      "operationId": "Site_SetCircuit",
+      "method": "SiteSetCircuitAsync",
+      "httpMethod": "POST",
+      "path": "/api/sites/{siteId}/circuits"
+    },
+    {
+      "operationId": "Site_UpdateCircuitCollection",
+      "method": "SiteUpdateCircuitCollectionAsync",
+      "httpMethod": "POST",
+      "path": "/api/sites/{siteId}/circuit_collection"
+    },
+    {
+      "operationId": "Site_DeleteCircuit",
+      "method": "SiteDeleteCircuitAsync",
+      "httpMethod": "DELETE",
+      "path": "/api/sites/{siteId}/circuits/{circuitId}"
+    },
+    {
+      "operationId": "Site_SetCircuitSettings",
+      "method": "SiteSetCircuitSettingsAsync",
+      "httpMethod": "POST",
+      "path": "/api/sites/{siteId}/circuits/{circuitId}/settings"
+    },
+    {
+      "operationId": "Site_GetCircuitSettings",
+      "method": "SiteGetCircuitSettingsAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/circuits/{circuitId}/settings"
+    },
+    {
+      "operationId": "Site_SetCircuitMaster",
+      "method": "SiteSetCircuitMasterAsync",
+      "httpMethod": "POST",
+      "path": "/api/sites/{siteId}/circuits/{circuitId}/set_master"
+    },
+    {
+      "operationId": "Site_GetDynamicCircuitCurrent",
+      "method": "SiteGetDynamicCircuitCurrentAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/circuits/{circuitId}/dynamicCurrent"
+    },
+    {
+      "operationId": "Site_SetDynamicCircuitCurrent",
+      "method": "SiteSetDynamicCircuitCurrentAsync",
+      "httpMethod": "POST",
+      "path": "/api/sites/{siteId}/circuits/{circuitId}/dynamicCurrent"
+    },
+    {
+      "operationId": "Site_GetMonthlyConsumptionByUser",
+      "method": "SiteGetMonthlyConsumptionByUserAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/users/{userId}/monthly"
+    },
+    {
+      "operationId": "Site_GetMonthlyConsumptionByUserAndCharger",
+      "method": "SiteGetMonthlyConsumptionByUserAndChargerAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/chargers/{chargerId}/users/{userId}/monthly"
+    },
+    {
+      "operationId": "Site_GetYearlyConsumptionByUser",
+      "method": "SiteGetYearlyConsumptionByUserAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/users/{userId}/yearly"
+    },
+    {
+      "operationId": "Site_GetYearlyConsumptionByUserAndCharger",
+      "method": "SiteGetYearlyConsumptionByUserAndChargerAsync",
+      "httpMethod": "GET",
+      "path": "/api/sites/{siteId}/chargers/{chargerId}/users/{userId}/yearly"
+    },
+    {
+      "operationId": "ApplyOcppForChargerEndpoint",
+      "method": "ApplyOcppForChargerEndpointAsync",
+      "httpMethod": "POST",
+      "path": "/local-ocpp/v1/operators/{operatorId}/connections/chargers/{serialNumber}"
+    },
+    {
+      "operationId": "DisableOcppForChargerEndpoint",
+      "method": "DisableOcppForChargerEndpointAsync",
+      "httpMethod": "DELETE",
+      "path": "/local-ocpp/v1/operators/{operatorId}/connections/chargers/{serialNumber}"
+    },
+    {
+      "operationId": "ApplyOcppForSiteEndpoint",
+      "method": "ApplyOcppForSiteEndpointAsync",
+      "httpMethod": "POST",
+      "path": "/local-ocpp/v1/operators/{operatorId}/connections/sites/{siteId}"
+    },
+    {
+      "operationId": "ApplyOcppForUserChargerEndpoint",
+      "method": "ApplyOcppForUserChargerEndpointAsync",
+      "httpMethod": "POST",
+      "path": "/local-ocpp/v1/connections/chargers/{serialNumber}"
+    },
+    {
+      "operationId": "DisableOcppForUserChargerEndpoint",
+      "method": "DisableOcppForUserChargerEndpointAsync",
+      "httpMethod": "DELETE",
+      "path": "/local-ocpp/v1/connections/chargers/{serialNumber}"
+    },
+    {
+      "operationId": "GetChargerConnectionDetailsEndpoint",
+      "method": "GetChargerConnectionDetailsEndpointAsync",
+      "httpMethod": "GET",
+      "path": "/local-ocpp/v1/operators/{operatorId}/connection-details/{serialNumber}"
+    },
+    {
+      "operationId": "PostChargerConnectionDetailsEndpoint",
+      "method": "PostChargerConnectionDetailsEndpointAsync",
+      "httpMethod": "POST",
+      "path": "/local-ocpp/v1/operators/{operatorId}/connection-details/{serialNumber}"
+    },
+    {
+      "operationId": "GetOperatorConnectionDetailsEndpoint",
+      "method": "GetOperatorConnectionDetailsEndpointAsync",
+      "httpMethod": "GET",
+      "path": "/local-ocpp/v1/operators/{operatorId}/connection-details"
+    },
+    {
+      "operationId": "PostOperatorConnectionDetailsEndpoint",
+      "method": "PostOperatorConnectionDetailsEndpointAsync",
+      "httpMethod": "POST",
+      "path": "/local-ocpp/v1/operators/{operatorId}/connection-details"
+    },
+    {
+      "operationId": "GetUserChargerConnectionDetailsEndpoint",
+      "method": "GetUserChargerConnectionDetailsEndpointAsync",
+      "httpMethod": "GET",
+      "path": "/local-ocpp/v1/connection-details/{serialNumber}"
+    },
+    {
+      "operationId": "PostUserChargerConnectionDetailsEndpoint",
+      "method": "PostUserChargerConnectionDetailsEndpointAsync",
+      "httpMethod": "POST",
+      "path": "/local-ocpp/v1/connection-details/{serialNumber}"
+    },
+    {
+      "operationId": "GetWorkflowResultsEndpoint",
+      "method": "GetWorkflowResultsEndpointAsync",
+      "httpMethod": "GET",
+      "path": "/local-ocpp/v1/operators/{operatorId}/workflow"
+    },
+    {
+      "operationId": "GetWorkflowStreamEndpoint",
+      "method": "GetWorkflowStreamEndpointAsync",
+      "httpMethod": "GET",
+      "path": "/local-ocpp/v1/operators/{operatorId}/workflow-events"
+    }
+  ]
+}

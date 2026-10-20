@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net10.0-windows</TargetFramework><OutputType>WinExe</OutputType><UseWPF>true</UseWPF></PropertyGroup>
+  <ItemGroup><ProjectReference Include="../EaseeChargerClient.Hosting/EaseeChargerClient.Hosting.csproj" /><InternalsVisibleTo Include="EaseeChargerClient.App.Tests" /></ItemGroup>
+</Project>

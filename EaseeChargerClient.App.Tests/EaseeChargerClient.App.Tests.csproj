@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net10.0-windows</TargetFramework><IsTestProject>true</IsTestProject><UseWPF>true</UseWPF></PropertyGroup>
+  <ItemGroup><ProjectReference Include="../EaseeChargerClient.App/EaseeChargerClient.App.csproj" /></ItemGroup>
+</Project>

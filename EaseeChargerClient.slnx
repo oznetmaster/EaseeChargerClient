@@ -1,0 +1,11 @@
+<Solution>
+  <Project Path="EaseeChargerClient/EaseeChargerClient.csproj" />
+  <Project Path="EaseeChargerClient.App/EaseeChargerClient.App.csproj" />
+  <Project Path="EaseeChargerClient.App.Tests/EaseeChargerClient.App.Tests.csproj" />
+  <Project Path="EaseeChargerClient.Hosting/EaseeChargerClient.Hosting.csproj" />
+  <Project Path="EaseeChargerClient.Hosting.Tests/EaseeChargerClient.Hosting.Tests.csproj" />
+  <Project Path="EaseeChargerClient.LiveTests/EaseeChargerClient.LiveTests.csproj" />
+  <Project Path="EaseeChargerClient.TestConsole/EaseeChargerClient.TestConsole.csproj" />
+  <Project Path="EaseeChargerClient.TestConsole.Tests/EaseeChargerClient.TestConsole.Tests.csproj" />
+  <Project Path="EaseeChargerClient.Tests/EaseeChargerClient.Tests.csproj" />
+</Solution>

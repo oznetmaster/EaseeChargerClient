@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFrameworks>net10.0;net472</TargetFrameworks><IsTestProject>true</IsTestProject><AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects><GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../EaseeChargerClient/EaseeChargerClient.csproj" />
+    <EmbeddedResource Include="../api/easee-cloud-api.json" LogicalName="EaseeChargerClient.Tests.ApiContract.data" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFrameworks>net10.0-windows;net472</TargetFrameworks><OutputType>Exe</OutputType><AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects><GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType></PropertyGroup>
+  <ItemGroup><ProjectReference Include="../EaseeChargerClient.Hosting/EaseeChargerClient.Hosting.csproj" /><InternalsVisibleTo Include="EaseeChargerClient.TestConsole.Tests" /></ItemGroup>
+</Project>

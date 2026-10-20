@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFrameworks>net10.0-windows;net472</TargetFrameworks><IsTestProject>true</IsTestProject><AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects><GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType></PropertyGroup>
+  <ItemGroup><ProjectReference Include="../EaseeChargerClient/EaseeChargerClient.csproj" />
+    <Compile Include="../Shared/LiveTestSettings.cs" Link="Testing/LiveTestSettings.cs" />
+    <Compile Include="../EaseeChargerClient.Hosting/OperationRunner.cs" Link="Testing/OperationRunner.cs" /></ItemGroup>
+</Project>

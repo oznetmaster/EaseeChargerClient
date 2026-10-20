@@ -1,0 +1,135 @@
+name: Publish .NET Package
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version matching the checked-out release tag, for example 0.1.0
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: nuget-release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+      actions: read
+      checks: read
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Resolve and validate release version
+        id: version
+        shell: pwsh
+        env:
+          REQUESTED_VERSION: ${{ inputs.version }}
+        run: |
+          $version = if ($env:GITHUB_EVENT_NAME -eq 'push') { $env:GITHUB_REF_NAME -replace '^v','' } else { $env:REQUESTED_VERSION -replace '^v','' }
+          if ($version -notmatch '^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$') { throw 'Invalid release version.' }
+          $tag = "v$version"
+          $tagRevision = git rev-parse "$tag^{commit}"
+          if ($LASTEXITCODE -or $tagRevision -ne (git rev-parse HEAD)) { throw 'The release tag must identify the exact checked-out source.' }
+          [xml]$props = Get-Content Directory.Build.props -Raw
+          if ([string]$props.Project.PropertyGroup.Version -ne $version) { throw 'Release tag and source version differ.' }
+          if ((Get-Content RELEASE-NOTES.md -Raw) -notmatch "(?m)^# EaseeChargerClient $([regex]::Escape($version))\s*$") { throw 'Release notes do not match the version.' }
+          "version=$version" >> $env:GITHUB_OUTPUT
+      - name: Require configured exact-source release checks
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REQUIRED_RELEASE_CHECKS: ${{ vars.RELEASE_REQUIRED_CHECKS }}
+          REQUIRED_HOSTED_WORKFLOWS: '["unit-tests.yml","api-contract.yml","nunit5-policy.yml"]'
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:REQUIRED_RELEASE_CHECKS)) { throw 'Configure RELEASE_REQUIRED_CHECKS before publication, including the processor validation check.' }
+          ./.github/scripts/Wait-RequiredReleaseChecks.ps1
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Verify generated API source
+        shell: pwsh
+        run: |
+          dotnet restore EaseeChargerClient.slnx
+          if ($LASTEXITCODE) { throw 'Restore failed.' }
+          ./tools/Regenerate.ps1
+          git diff --exit-code -- EaseeChargerClient/Generated api/coverage.json
+          if ($LASTEXITCODE) { throw 'Generated API source differs.' }
+      - name: Verify offline NUnit suites
+        shell: pwsh
+        run: ./tools/Test-Offline.ps1
+      - name: Verify XML documentation
+        shell: pwsh
+        run: ./tools/Test-Documentation.ps1
+      - name: Build HTML documentation
+        shell: pwsh
+        run: ./tools/Build-Documentation.ps1
+      - name: Verify release-check policy
+        shell: pwsh
+        run: ./.github/scripts/Test-RequiredReleaseChecks.ps1
+      - name: Package library and companion applications
+        shell: pwsh
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
+        run: ./tools/Stage-Release.ps1 -Version $env:RELEASE_VERSION
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-assets
+          path: artifacts/release/*
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: publication-validation
+          path: |
+            TestResults/**/*.trx
+            artifacts/documentation/coverage.json
+  publish:
+    needs: validate
+    runs-on: windows-latest
+    environment: nuget
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-assets
+          path: artifacts/release
+      - name: Validate NuGet account configuration
+        shell: pwsh
+        env:
+          NUGET_USER: ${{ vars.NUGET_USER }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:NUGET_USER)) { throw 'Set NUGET_USER to the NuGet profile name.' }
+      - name: Authenticate to NuGet using GitHub OIDC
+        id: login
+        uses: NuGet/login@v1
+        with:
+          user: ${{ vars.NUGET_USER }}
+      - name: Publish package
+        shell: pwsh
+        env:
+          NUGET_TEMP_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
+          RELEASE_VERSION: ${{ needs.validate.outputs.version }}
+        run: dotnet nuget push "artifacts/release/EaseeChargerClient.$env:RELEASE_VERSION.nupkg" --api-key $env:NUGET_TEMP_KEY --source https://api.nuget.org/v3/index.json
+      - name: Create GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_VERSION: ${{ needs.validate.outputs.version }}
+        run: |
+          gh release create "v$env:RELEASE_VERSION" artifacts/release/* --verify-tag --title "EaseeChargerClient $env:RELEASE_VERSION" --notes-file RELEASE-NOTES.md
+          if ($LASTEXITCODE) { throw 'GitHub release creation failed.' }

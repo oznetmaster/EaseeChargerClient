@@ -1,0 +1,19 @@
+name: NUnit 5 configuration policy
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify NUnit 5 and VSTest infrastructure
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          [xml]$configuration = Get-Content Directory.Build.targets -Raw
+          $nunit = $configuration.SelectSingleNode('//PackageReference[@Include="NUnit"]')
+          if ([string]$nunit.Version -notmatch '^5[.]') { throw 'NUnit 5 is required.' }
+          foreach ($dependency in 'NUnit3TestAdapter','Microsoft.NET.Test.Sdk') {
+            if (!$configuration.SelectSingleNode("//PackageReference[@Include='$dependency']")) { throw "Missing $dependency" }
+          }

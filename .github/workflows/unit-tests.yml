@@ -1,0 +1,31 @@
+name: Unit tests
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Build and run all offline NUnit 5 suites
+        shell: pwsh
+        run: ./tools/Test-Offline.ps1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: offline-test-results
+          path: TestResults/**/*.trx
+      - name: Verify the library package
+        run: dotnet pack EaseeChargerClient/EaseeChargerClient.csproj -c Release --output artifacts/nuget
+      - name: Verify packaged XML and release documents
+        shell: pwsh
+        run: |
+          [xml]$props = Get-Content Directory.Build.props -Raw
+          ./tools/Test-Package.ps1 -Package "artifacts/nuget/EaseeChargerClient.$($props.Project.PropertyGroup.Version).nupkg"

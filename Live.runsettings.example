@@ -1,0 +1,3 @@
+<RunSettings>
+  <NUnit><NumberOfTestWorkers>0</NumberOfTestWorkers><ExplicitMode>Strict</ExplicitMode></NUnit>
+</RunSettings>

@@ -1,0 +1,15 @@
+**/bin/
+**/obj/
+.vs/
+TestResults/
+artifacts/
+*.user
+*.suo
+*.dpapi
+*.secret*
+*.trx
+Live.runsettings
+LiveSettings.json
+docfx_project/_site/
+docfx_project/api/
+docfx_project/hosting/

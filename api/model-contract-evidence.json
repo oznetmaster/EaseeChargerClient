@@ -1,0 +1,95 @@
+{
+  "reviewed": "2026-10-20",
+  "policy": "Typed attribute models, nullable missing values and calculated discriminators. Unconstrained schemas fail generation unless explicitly researched and listed.",
+  "pythonImplementations": [
+    {
+      "repository": "https://github.com/nordicopen/pyeasee",
+      "commit": "5a11645df12707b257a3ffdc0605ac580994f77c",
+      "files": [
+        "pyeasee/utils.py",
+        "pyeasee/const.py",
+        "pyeasee/charger.py",
+        "pyeasee/easee.py"
+      ],
+      "findings": [
+        "Converts stream booleans, doubles and integers; leaves other stream values as strings.",
+        "REST observations retain value as a dictionary field.",
+        "No concrete Position decoder or closed Problem Details extension schema."
+      ]
+    },
+    {
+      "repository": "https://github.com/Fr00t/easee2mqtt",
+      "commit": "a5f19df6ece944ac96cbffc10068dbc37645ff51",
+      "files": [
+        "easee2mqtt.py"
+      ],
+      "findings": [
+        "Older selected-endpoint integration using dictionaries and obsolete API URLs; no additional closed extension contract."
+      ]
+    }
+  ],
+  "observationModels": {
+    "discriminator": "dataType",
+    "source": "https://developer.easee.com/reference/getobservations",
+    "nullableValues": {
+      "2": "bool?",
+      "3": "double?",
+      "4": "long?",
+      "5": "EaseePosition?",
+      "6": "string?"
+    },
+    "implementation": "An attribute-selected converter deserializes a typed discriminator header and then the corresponding typed DTO, without JsonDocument, JsonElement, object-valued payloads or property-by-property JSON processing.",
+    "liveVerified": [
+      "Integer charger mode",
+      "Double total power"
+    ],
+    "position": {
+      "status": "Unverified against an Easee Position payload; nullable upstream model explicitly approved by user.",
+      "source": "https://github.com/Masterloop/Masterloop.Core.Types/blob/b411682e56760d848c361e28add7f06964c8b01d/src/Masterloop.Core.Types/Base/Position.cs",
+      "fields": [
+        "Latitude: double?",
+        "Longitude: double?",
+        "Altitude: double?",
+        "Dop: double?"
+      ],
+      "selectedChargerResult": "No location observation returned; no coordinates inferred or written."
+    }
+  },
+  "genuineOpenValues": [
+    {
+      "fields": [
+        "Problem Details extension members",
+        "Problem Details extensions dictionaries"
+      ],
+      "evidence": [
+        "The checked-in Easee OpenAPI explicitly allows additional properties without a value type.",
+        "https://www.rfc-editor.org/rfc/rfc9457.html#section-3.2"
+      ],
+      "knownTypedFields": [
+        "type",
+        "title",
+        "status",
+        "detail",
+        "instance",
+        "traceId",
+        "Published validation error dictionaries or error lists"
+      ],
+      "reason": "Unknown problem-type-specific extension members have no closed global field or value-type set."
+    }
+  ],
+  "errorModels": "Error bodies are deserialized to the published DTO for the operation/status, retained as ErrorResponse. Problem is a calculated common summary; the two published validation error shapes remain typed.",
+  "typedVariableValues": [
+    {
+      "fields": [
+        "Easee_Cloud_API_Operation.value"
+      ],
+      "operation": "Site_UpdateSitePATCH",
+      "evidence": [
+        "The endpoint explicitly uses JSON Patch and documents string /name and numeric /siteType values.",
+        "https://www.rfc-editor.org/rfc/rfc6902.html"
+      ],
+      "reason": "Value is variable but can be determined from the target model.",
+      "implementation": "Attribute-selected path/op header and published site DTO attributes select a concrete generic EaseeSitePatchValue<T>. String, numeric/enum, Boolean, structured model, array and null values use typed serialization without a JSON DOM. Unknown paths fail instead of silently becoming arbitrary JSON."
+    }
+  ]
+}
