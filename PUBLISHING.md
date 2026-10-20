@@ -20,6 +20,12 @@ The NuGet policy is restricted to package **EaseeChargerClient**, GitHub owner *
 
 Configure `RELEASE_REQUIRED_CHECKS` as a nonempty JSON array of exact check names and GitHub App IDs, including the agreed external processor validation check. Use actual check results from this repository to obtain these values. The reused release-check policy waits for successful results on the exact release revision and rejects missing, failed or newer pending checks. It also requires the hosted unit, API-generation and NUnit policy workflows. The local hardware validation already completed does not establish a hosted check on a future commit.
 
+## Verify authentication without publishing
+
+Run the **Publish .NET Package** workflow manually from `main` with `verify_oidc_only` enabled and the current version supplied. This mode runs only the NuGet login and verifies that a temporary credential was issued; it does not build, push a package or create a release. It uses the same workflow filename, account, environment and package-scoped NuGet policy as publication. The release validation and publishing jobs are excluded in this mode.
+
+Normal publication retains its exact-source release checks. Authentication verification does not establish a processor-test pass or publish a package.
+
 ## Prepare a release
 
 Update `Directory.Build.props`, `CHANGELOG.md` and `RELEASE-NOTES.md` together. Replace the candidate/unreleased status when an actual release is approved. Confirm the README's version and runtime requirements. Run:

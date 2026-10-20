@@ -8,6 +8,11 @@ on:
         description: Version matching the checked-out release tag, for example 0.1.0
         required: true
         type: string
+      verify_oidc_only:
+        description: Verify NuGet trusted authentication without building or publishing a release
+        required: false
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -15,6 +20,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   validate:
+    if: github.event_name != 'workflow_dispatch' || !inputs.verify_oidc_only
     runs-on: windows-latest
     permissions:
       contents: read
@@ -93,6 +99,7 @@ jobs:
             TestResults/**/*.trx
             artifacts/documentation/coverage.json
   publish:
+    if: github.event_name != 'workflow_dispatch' || !inputs.verify_oidc_only
     needs: validate
     runs-on: windows-latest
     environment: nuget
@@ -133,3 +140,23 @@ jobs:
         run: |
           gh release create "v$env:RELEASE_VERSION" artifacts/release/* --verify-tag --title "EaseeChargerClient $env:RELEASE_VERSION" --notes-file RELEASE-NOTES.md
           if ($LASTEXITCODE) { throw 'GitHub release creation failed.' }
+  verify-oidc:
+    if: github.event_name == 'workflow_dispatch' && inputs.verify_oidc_only
+    runs-on: windows-latest
+    environment: nuget
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Authenticate to NuGet without publication
+        id: login
+        uses: NuGet/login@v1
+        with:
+          user: ${{ vars.NUGET_USER }}
+      - name: Confirm trusted authentication
+        shell: pwsh
+        env:
+          NUGET_TEMP_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:NUGET_TEMP_KEY)) { throw 'NuGet did not issue a temporary credential.' }
+          Write-Host 'NuGet OIDC authentication succeeded. No package was pushed.'
