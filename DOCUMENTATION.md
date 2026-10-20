@@ -25,7 +25,7 @@ Run from the repository root:
 ```powershell
 pwsh tools/Test-Documentation.ps1
 dotnet pack EaseeChargerClient/EaseeChargerClient.csproj -c Release -o artifacts/nuget
-pwsh tools/Test-Package.ps1 -Package artifacts/nuget/EaseeChargerClient.0.1.0.nupkg
+pwsh tools/Test-Package.ps1 -Package artifacts/nuget/EaseeChargerClient.1.0.0.nupkg
 pwsh tools/Build-Documentation.ps1
 ```
 

@@ -2,7 +2,7 @@
 
 Changes to the independent Easee client library and its companion applications are recorded here. Versions follow Semantic Versioning.
 
-## 0.1.0 — Unreleased
+## 1.0.0 — Unreleased
 
 ### Added
 

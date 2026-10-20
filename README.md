@@ -4,7 +4,7 @@ Independent, unofficial C# client for Easee EV chargers, with a Windows desktop 
 
 [GitHub repository](https://github.com/oznetmaster/EaseeChargerClient) · [HTML API documentation](https://oznetmaster.github.io/EaseeChargerClient/)
 
-Version **0.1.0** is the initial NuGet release candidate; the package has not yet been published.
+Version **1.0.0** is the first stable release. The public API follows Semantic Versioning; incompatible changes require a new major version.
 
 ## Features and targets
 
@@ -104,7 +104,7 @@ pwsh tools/Test-Offline.ps1
 pwsh tools/Test-Documentation.ps1
 pwsh tools/Build-Documentation.ps1
 dotnet pack EaseeChargerClient/EaseeChargerClient.csproj -c Release -o artifacts/nuget
-pwsh tools/Test-Package.ps1 -Package artifacts/nuget/EaseeChargerClient.0.1.0.nupkg
+pwsh tools/Test-Package.ps1 -Package artifacts/nuget/EaseeChargerClient.1.0.0.nupkg
 ```
 
 Offline suites exercise every supported route and published schema, transport, cancellation, authentication rotation, streaming subscriptions, encrypted persistence and companion behavior. The normal command excludes live execution. HTML documentation is generated under `docfx_project/_site`; [DOCUMENTATION.md](DOCUMENTATION.md) defines the XML standard and its gate. [PUBLISHING.md](PUBLISHING.md) describes GitHub Pages and NuGet trusted publishing setup.

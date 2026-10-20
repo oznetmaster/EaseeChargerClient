@@ -1,6 +1,6 @@
-# EaseeChargerClient 0.1.0
+# EaseeChargerClient 1.0.0
 
-Initial release candidate. This version has not yet been published.
+First stable release of the independent client library and its companion applications.
 
 The library provides typed access to all 168 non-deprecated operations in the checked-in Easee REST contract and real-time SignalR charger updates. It targets .NET 10 and .NET Framework 4.7.2. Companion applications include a .NET 10 WPF workbench and a console with interactive and command-line modes.
 

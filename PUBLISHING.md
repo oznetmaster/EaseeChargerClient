@@ -34,7 +34,7 @@ Update `Directory.Build.props`, `CHANGELOG.md` and `RELEASE-NOTES.md` together. 
 pwsh tools/Test-Offline.ps1
 pwsh tools/Test-Documentation.ps1
 pwsh tools/Build-Documentation.ps1
-pwsh tools/Stage-Release.ps1 -Version 0.1.0
+pwsh tools/Stage-Release.ps1 -Version 1.0.0
 ```
 
 Inspect `artifacts/release`: the NuGet package, library DLL/XML archive, desktop and console archives, HTML documentation archive, release documents and SHA-256 manifest. These commands only stage local files. The staging command requires an empty release output directory to prevent mixing previous assets into a new release.
