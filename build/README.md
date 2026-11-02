@@ -22,3 +22,5 @@ Available tasks:
 - `api-contract-generated-5`
 
 The shared component rejects missing/stale/empty/failed declared TRX results and writes one receipt per invocation beneath `artifacts/build-automation/`. It does not publish packages or invoke live hardware tests. Existing specialized scripts remain authoritative.
+
+The unchanged solution-wide offline command also creates two empty reports for the excluded live-only assembly. `Verify-OfflineResults.ps1` requires fresh, successful results for all seven offline project/framework combinations and moves those reports into `TestResults/OfflineVerified/` for the shared zero-test guard. Empty reports are accepted only when they explicitly identify the excluded LiveTests assembly and filter, retained separately, and never counted as passed tests.

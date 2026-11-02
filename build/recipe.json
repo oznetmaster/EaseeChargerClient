@@ -10,7 +10,7 @@
         }
       ],
       "results": [
-        "TestResults/**/*.trx"
+        "TestResults/OfflineVerified/*.trx"
       ]
     },
     "unit-tests-test-verify-the-library-package": {
