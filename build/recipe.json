@@ -84,6 +84,22 @@
         "site": "docfx_project/_site",
         "title": "EaseeChargerClient"
       }
+    },
+    "xml-documentation": {
+      "commands": [
+        {
+          "executable": "dotnet",
+          "arguments": [
+            "--version"
+          ]
+        }
+      ]
     }
+  },
+  "xmlDocumentation": {
+    "projects": [
+      "EaseeChargerClient/EaseeChargerClient.csproj",
+      "EaseeChargerClient.Hosting/EaseeChargerClient.Hosting.csproj"
+    ]
   }
 }
