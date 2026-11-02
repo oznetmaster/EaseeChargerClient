@@ -1,0 +1,6 @@
+- name: API Reference
+  href: index.md
+- name: Client API
+  href: ../api/toc.yml
+- name: Windows hosting API
+  href: ../api/EaseeChargerClient.Hosting.yml

@@ -13,12 +13,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-      - uses: oznetmaster/BuildAutomation@ae6f311e530a18dc705971dcc655fc97de03e368
+      - uses: oznetmaster/BuildAutomation@c0a215e202dc1e05a37707720ab12032be610518
         with:
           task: api-contract-generated-3
-      - uses: oznetmaster/BuildAutomation@ae6f311e530a18dc705971dcc655fc97de03e368
+      - uses: oznetmaster/BuildAutomation@c0a215e202dc1e05a37707720ab12032be610518
         with:
           task: api-contract-generated-4
-      - uses: oznetmaster/BuildAutomation@ae6f311e530a18dc705971dcc655fc97de03e368
+      - uses: oznetmaster/BuildAutomation@c0a215e202dc1e05a37707720ab12032be610518
         with:
           task: api-contract-generated-5

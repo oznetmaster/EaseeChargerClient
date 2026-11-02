@@ -1,14 +1,10 @@
-- name: Getting started
-  href: ../README.md
-- name: Client API
-  href: api/toc.yml
-- name: Windows hosting API
-  href: api/EaseeChargerClient.Hosting.yml
-- name: Changelog
-  href: ../CHANGELOG.md
-- name: Release notes
-  href: ../RELEASE-NOTES.md
-- name: Documentation standard
-  href: ../DOCUMENTATION.md
-- name: Publishing
-  href: ../PUBLISHING.md
+- name: Home
+  href: index.md
+- name: Guides
+  href: guides/
+- name: API Reference
+  href: reference/
+- name: GitHub
+  href: https://github.com/oznetmaster/EaseeChargerClient
+- name: NuGet
+  href: https://www.nuget.org/profiles/oznetmaster

@@ -36,6 +36,15 @@
           "PUBLISHING.md"
         ],
         "dest": "guides"
+      },
+      {
+        "files": [
+          "toc.yml",
+          "guides/**.md",
+          "guides/**/toc.yml",
+          "reference/**.md",
+          "reference/**/toc.yml"
+        ]
       }
     ],
     "resource": [
@@ -53,7 +62,8 @@
     "globalMetadata": {
       "_appTitle": "EaseeChargerClient",
       "_appName": "EaseeChargerClient",
-      "_enableSearch": true
+      "_enableSearch": true,
+      "_appFooter": "Copyright (c) 2026 Neil Colvin."
     },
     "output": "_site",
     "template": [

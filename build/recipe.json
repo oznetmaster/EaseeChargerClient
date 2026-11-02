@@ -65,6 +65,25 @@
           "shell": "pwsh"
         }
       ]
+    },
+    "documentation": {
+      "commands": [
+        {
+          "executable": "pwsh",
+          "script": "build/steps/documentation-0.ps1",
+          "shell": "pwsh"
+        },
+        {
+          "executable": "pwsh",
+          "script": "build/steps/documentation-1.ps1",
+          "shell": "pwsh"
+        }
+      ],
+      "documentation": {
+        "config": "docfx_project/docfx.json",
+        "site": "docfx_project/_site",
+        "title": "EaseeChargerClient"
+      }
     }
   }
 }

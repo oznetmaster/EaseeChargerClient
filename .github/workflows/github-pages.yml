@@ -1,9 +1,4 @@
 name: HTML documentation
-on:
-  push:
-    branches: [main]
-  pull_request:
-  workflow_dispatch:
 permissions:
   contents: read
 concurrency:
@@ -13,24 +8,22 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 10.0.x
-      - name: Verify XML coverage
-        shell: pwsh
-        run: ./tools/Test-Documentation.ps1
-      - name: Build HTML reference
-        shell: pwsh
-        run: ./tools/Build-Documentation.ps1
-      - uses: actions/upload-artifact@v4
-        with:
-          name: html-documentation
-          path: docfx_project/_site
-      - uses: actions/upload-pages-artifact@v3
-        if: github.event_name != 'pull_request'
-        with:
-          path: docfx_project/_site
+    - uses: actions/checkout@v4
+    - uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+    - name: Build and verify standard documentation
+      uses: oznetmaster/BuildAutomation@c0a215e202dc1e05a37707720ab12032be610518
+      with:
+        task: documentation
+    - uses: actions/upload-artifact@v4
+      with:
+        name: html-documentation
+        path: docfx_project/_site
+    - uses: actions/upload-pages-artifact@v3
+      if: github.event_name != 'pull_request'
+      with:
+        path: docfx_project/_site
   deploy:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: build
@@ -42,6 +35,12 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy documentation
-        id: deployment
-        uses: actions/deploy-pages@v4
+    - name: Deploy documentation
+      id: deployment
+      uses: actions/deploy-pages@v4
+'on':
+  push:
+    branches:
+    - main
+  pull_request: null
+  workflow_dispatch: null

@@ -2,6 +2,11 @@
   "version": 1,
   "isRoot": true,
   "tools": {
-    "docfx": { "version": "2.81.0", "commands": ["docfx"] }
+    "docfx": {
+      "version": "2.81.0",
+      "commands": [
+        "docfx"
+      ]
+    }
   }
 }
