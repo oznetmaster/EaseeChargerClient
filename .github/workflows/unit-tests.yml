@@ -15,17 +15,19 @@ jobs:
         with:
           dotnet-version: 10.0.x
       - name: Build and run all offline NUnit 5 suites
-        shell: pwsh
-        run: ./tools/Test-Offline.ps1
+        uses: oznetmaster/BuildAutomation@6f20e1937d3bab8ba7e545a3a77b6fe689f63f2e
+        with:
+          task: unit-tests-test-build-and-run-all-offline-nunit-5-suites
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: offline-test-results
           path: TestResults/**/*.trx
       - name: Verify the library package
-        run: dotnet pack EaseeChargerClient/EaseeChargerClient.csproj -c Release --output artifacts/nuget
+        uses: oznetmaster/BuildAutomation@6f20e1937d3bab8ba7e545a3a77b6fe689f63f2e
+        with:
+          task: unit-tests-test-verify-the-library-package
       - name: Verify packaged XML and release documents
-        shell: pwsh
-        run: |
-          [xml]$props = Get-Content Directory.Build.props -Raw
-          ./tools/Test-Package.ps1 -Package "artifacts/nuget/EaseeChargerClient.$($props.Project.PropertyGroup.Version).nupkg"
+        uses: oznetmaster/BuildAutomation@6f20e1937d3bab8ba7e545a3a77b6fe689f63f2e
+        with:
+          task: unit-tests-test-verify-packaged-xml-and-release-documents

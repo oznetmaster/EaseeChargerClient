@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "tasks": {
+    "unit-tests-test-build-and-run-all-offline-nunit-5-suites": {
+      "commands": [
+        {
+          "executable": "pwsh",
+          "script": "build/steps/unit-tests-test-build-and-run-all-offline-nunit-5-suites.ps1",
+          "shell": "pwsh"
+        }
+      ],
+      "results": [
+        "TestResults/**/*.trx"
+      ]
+    },
+    "unit-tests-test-verify-the-library-package": {
+      "commands": [
+        {
+          "executable": "dotnet",
+          "arguments": [
+            "pack",
+            "EaseeChargerClient/EaseeChargerClient.csproj",
+            "-c",
+            "Release",
+            "--output",
+            "artifacts/nuget"
+          ]
+        }
+      ]
+    },
+    "unit-tests-test-verify-packaged-xml-and-release-documents": {
+      "commands": [
+        {
+          "executable": "pwsh",
+          "script": "build/steps/unit-tests-test-verify-packaged-xml-and-release-documents.ps1",
+          "shell": "pwsh"
+        }
+      ]
+    },
+    "api-contract-generated-3": {
+      "commands": [
+        {
+          "executable": "dotnet",
+          "arguments": [
+            "restore",
+            "EaseeChargerClient.slnx"
+          ]
+        }
+      ]
+    },
+    "api-contract-generated-4": {
+      "commands": [
+        {
+          "executable": "pwsh",
+          "script": "build/steps/api-contract-generated-4.ps1",
+          "shell": "pwsh"
+        }
+      ]
+    },
+    "api-contract-generated-5": {
+      "commands": [
+        {
+          "executable": "pwsh",
+          "script": "build/steps/api-contract-generated-5.ps1",
+          "shell": "pwsh"
+        }
+      ]
+    }
+  }
+}

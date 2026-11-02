@@ -1,0 +1,1 @@
+./tools/Regenerate.ps1

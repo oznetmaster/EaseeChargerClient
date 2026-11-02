@@ -13,3 +13,7 @@ LiveSettings.json
 docfx_project/_site/
 docfx_project/api/
 docfx_project/hosting/
+
+# Shared Cake build downloads and invocation receipts
+/artifacts/build-components/
+/artifacts/build-automation/
