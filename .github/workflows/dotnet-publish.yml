@@ -101,7 +101,6 @@ jobs:
     needs: build
     runs-on: windows-latest
     timeout-minutes: 30
-    environment: nuget
     permissions:
       actions: read
       contents: write
@@ -120,7 +119,6 @@ jobs:
   verify-oidc:
     if: github.event_name == 'workflow_dispatch' && inputs.artifact_run_id == '' && inputs.verify_oidc_only
     runs-on: windows-latest
-    environment: nuget
     permissions:
       contents: read
       id-token: write
@@ -141,7 +139,6 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && inputs.artifact_run_id != '' && inputs.verify_oidc_only != true
     runs-on: windows-latest
     timeout-minutes: 30
-    environment: nuget
     permissions:
       actions: read
       contents: write
