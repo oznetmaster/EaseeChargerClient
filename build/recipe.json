@@ -102,6 +102,14 @@
           "arguments": [
             "-NoProfile",
             "-File",
+            ".github/scripts/Test-RequiredReleaseChecks.ps1"
+          ]
+        },
+        {
+          "executable": "pwsh",
+          "arguments": [
+            "-NoProfile",
+            "-File",
             "tools/Regenerate.ps1"
           ]
         },
