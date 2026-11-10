@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "version": "1.0.1",
+  "completedUtc": "2026-11-09T23:12:44.6184403Z",
+  "workstation": [
+    {
+      "configurations": [
+        "Debug",
+        "Release"
+      ],
+      "passed": 453,
+      "suite": "Easee",
+      "failed": 0,
+      "framework": "net10.0",
+      "skipped": 0
+    },
+    {
+      "configurations": [
+        "Debug",
+        "Release"
+      ],
+      "passed": 453,
+      "suite": "Easee",
+      "failed": 0,
+      "framework": "net472",
+      "skipped": 0
+    }
+  ],
+  "processor": {
+    "selectedPassed": 12.0,
+    "aggregatePassed": 374,
+    "scope": "Merged offline host with recorded resolved dependencies; fake services and credentials only",
+    "runtime": "Mono 6.12.0.107, 32-bit",
+    "firmware": "4.013.0134",
+    "failed": 0,
+    "skipped": 0
+  },
+  "validatedSourceFiles": [
+    {
+      "Path": "EaseeChargerClient.Tests/RealtimeTests.cs",
+      "Sha256": "C4442CB1B9DF587CD81F9C8C6E4E9D7AE94EDD57C166CB888130D0726C58078A"
+    },
+    {
+      "Path": "EaseeChargerClient/EaseeRealtimeClient.cs",
+      "Sha256": "C8CA2205B3D40E2F57E36143F12ADF922559A95EE9AE96E174E978D0C8C6AA7B"
+    }
+  ],
+  "publicationChanges": "Version metadata, documentation and shared publication tooling added after validation; runtime source hashes retained."
+}

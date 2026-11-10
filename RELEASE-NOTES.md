@@ -1,21 +1,14 @@
-# EaseeChargerClient 1.0.0
+# EaseeChargerClient 1.0.1
 
-First stable release of the independent client library and its companion applications.
+This patch corrects the audited reliability issues while retaining the existing public API and supported frameworks.
 
-The library provides typed access to all 168 non-deprecated operations in the checked-in Easee REST contract and real-time SignalR charger updates. It targets .NET 10 and .NET Framework 4.7.2. Companion applications include a .NET 10 WPF workbench and a console with interactive and command-line modes.
+- The streaming client detects closure during subscription setup and leaves the connection restartable. Repeated or overlapping DisposeAsync calls share one shutdown task. Stop/start/subscription operations reject disposal instead of reusing closed resources. The separate EaseeSession contract still requires pending session operations to finish before its synchronous Dispose.
 
-Authentication sessions serialize single-use refresh exchanges and persist each replacement before use. The Windows applications store tokens under the current user's DPAPI protection and retain an exclusive profile lease. Passwords are entered interactively and are not saved.
+## Validation
 
-The release includes typed request, response and error contracts, nullable observation models, typed JSON Patch values, XML reference files for both library targets and HTML documentation. Modifying operations are never automatically retried.
+- Offline workstation tests passed in Debug and Release on .NET 10 and .NET Framework 4.7.2: Easee net10.0: 453; Easee net472: 453. No failures or skips.
+- 12 selected tests passed in the shared 374-case processor run on Mono 6.12.0.107 (32-bit), with no failures or skips. The merged host's resolved dependency graph was tested; these are not eight independent release-package tests.
+- Fake transports and credentials exercised ordering, cancellation, shutdown and failure recovery. No new household-device or cloud control was performed. Pairing storage is unchanged.
+- Strict XML, formatting and style checks passed. Package and companion-app preparation is verified separately by the shared release pipeline.
 
-## Validation and limits
-
-The offline suites cover every supported REST route and published schema, transport and cancellation, token rotation, SignalR subscription recovery, Windows profile persistence and companion behavior. Baseline read-only live tests passed on both desktop targets with a privately configured account. One separately authorized start request was accepted; the already charged vehicle remained completed at zero power. HTTP acceptance does not establish energy delivery.
-
-Live coverage is limited to resources and roles available to the configured account. Installer, operator and Direct OCPP paths have contract coverage but are not all verified against partner resources. Direct OCPP workflow events are exposed as a stream because the published contract supplies no event model.
-
-Position observations use nullable latitude, longitude, altitude and DOP from a related upstream IoT model. The Easee wire shape is unverified; the configured charger returned no location observation. No location is inferred or written. The separate paid AMQP service and deprecated REST endpoints are outside scope.
-
-GitHub-hosted workflow execution, Pages deployment and NuGet publication must be verified after the repository and trusted-publishing policy have been configured.
-
-See [README.md](README.md) for setup and examples, [CHANGELOG.md](CHANGELOG.md) for changes, and [PUBLISHING.md](PUBLISHING.md) for publication setup.
+See [the changelog](https://github.com/oznetmaster/EaseeChargerClient/blob/v1.0.1/CHANGELOG.md) and [validation provenance](https://github.com/oznetmaster/EaseeChargerClient/blob/v1.0.1/release-validation/v1.0.1.json).

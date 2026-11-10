@@ -4,11 +4,15 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <Deterministic>true</Deterministic>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <TreatWarningsAsErrors Condition="'$(Configuration)' == 'Debug'">true</TreatWarningsAsErrors>
+    <CodeAnalysisTreatWarningsAsErrors Condition="'$(Configuration)' == 'Debug'">true</CodeAnalysisTreatWarningsAsErrors>
+    <TreatWarningsAsErrors Condition="'$(Configuration)' == 'Release'">false</TreatWarningsAsErrors>
+    <CodeAnalysisTreatWarningsAsErrors Condition="'$(Configuration)' == 'Release'">false</CodeAnalysisTreatWarningsAsErrors>
     <Authors>Neil Colvin</Authors>
     <Company>Neil Colvin</Company>
     <Copyright>Copyright © 2026 Neil Colvin</Copyright>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">

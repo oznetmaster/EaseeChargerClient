@@ -88,8 +88,14 @@ public sealed class EaseeRealtimeClient : IAsyncDisposable
 	private readonly IEaseeProductConnection _connection;
 	private readonly HashSet<string> _products;
 	private readonly SemaphoreSlim _gate = new (1, 1);
+#pragma warning disable IDE0330 // Shared Monitor semantics on net472 and processor Mono.
+	private readonly object _stateSync = new ();
+#pragma warning restore IDE0330
 	private readonly ILogger _logger;
 	private bool _started;
+	private bool _disposed;
+	private long _closedGeneration;
+	private Task? _disposal;
 	/// <summary>Creates a SignalR receiver for the supplied charger subscriptions.</summary>
 	/// <exception cref="ArgumentNullException">A required dependency is null.</exception>
 	/// <exception cref="ArgumentException">A serial number is empty or the hub URI does not use HTTPS.</exception>
@@ -110,23 +116,49 @@ public sealed class EaseeRealtimeClient : IAsyncDisposable
 		_connection.Reconnected += RestoreSubscriptionsAsync;
 		_connection.Closed += OnClosed;
 		}
-	private void OnClosed () => _started = false;
+	private void OnClosed ()
+		{
+		lock (_stateSync)
+			{
+			_closedGeneration++;
+			_started = false;
+			}
+		}
+	private void ThrowIfDisposed ()
+		{
+		lock (_stateSync)
+			if (_disposed)
+				throw new ObjectDisposedException (nameof (EaseeRealtimeClient));
+		}
 	/// <summary>Connects to the hub and subscribes to the initial state and future updates.</summary>
 	/// <returns>A task that completes after connection and subscription.</returns>
 	/// <param name="cancellationToken">Cancels the asynchronous operation. Cancellation does not undo a request already accepted by the server.</param>
 	public async Task StartAsync (CancellationToken cancellationToken = default)
 		{
+		ThrowIfDisposed ();
 		await _gate.WaitAsync (cancellationToken).ConfigureAwait (false);
 		try
 			{
-			if (_started)
-				return;
+			long generation;
+			lock (_stateSync)
+				{
+				ThrowIfDisposed ();
+				if (_started)
+					return;
+				generation = _closedGeneration;
+				}
 			await _connection.StartAsync (cancellationToken).ConfigureAwait (false);
 			try
 				{
 				foreach (string product in _products)
 					await _connection.SubscribeAsync (product, cancellationToken).ConfigureAwait (false);
-				_started = true;
+				lock (_stateSync)
+					{
+					ThrowIfDisposed ();
+					if (generation != _closedGeneration)
+						throw new IOException ("The streaming connection closed during subscription setup. Start it again explicitly.");
+					_started = true;
+					}
 				}
 			catch { await _connection.StopAsync (CancellationToken.None).ConfigureAwait (false); throw; }
 			}
@@ -140,14 +172,19 @@ public sealed class EaseeRealtimeClient : IAsyncDisposable
 	/// <param name="cancellationToken">Cancels the asynchronous operation. Cancellation does not undo a request already accepted by the server.</param>
 	public async Task AddProductAsync (string serialNumber, CancellationToken cancellationToken = default)
 		{
+		ThrowIfDisposed ();
 		if (string.IsNullOrWhiteSpace (serialNumber))
 			throw new ArgumentException ("A serial number is required.", nameof (serialNumber));
 		await _gate.WaitAsync (cancellationToken).ConfigureAwait (false);
 		try
 			{
+			ThrowIfDisposed ();
 			if (_products.Contains (serialNumber))
 				return;
-			if (_started)
+			bool started;
+			lock (_stateSync)
+				started = _started;
+			if (started)
 				await _connection.SubscribeAsync (serialNumber, cancellationToken).ConfigureAwait (false);
 			_products.Add (serialNumber);
 			}
@@ -158,7 +195,10 @@ public sealed class EaseeRealtimeClient : IAsyncDisposable
 		await _gate.WaitAsync ().ConfigureAwait (false);
 		try
 			{
-			if (_started)
+			bool started;
+			lock (_stateSync)
+				started = !_disposed && _started;
+			if (started)
 				foreach (string product in _products)
 					await _connection.SubscribeAsync (product, CancellationToken.None).ConfigureAwait (false);
 			}
@@ -170,22 +210,58 @@ public sealed class EaseeRealtimeClient : IAsyncDisposable
 	/// <param name="cancellationToken">Cancels the asynchronous operation. Cancellation does not undo a request already accepted by the server.</param>
 	public async Task StopAsync (CancellationToken cancellationToken = default)
 		{
+		ThrowIfDisposed ();
 		await _gate.WaitAsync (cancellationToken).ConfigureAwait (false);
 		try
 			{
+			ThrowIfDisposed ();
 			await _connection.StopAsync (cancellationToken).ConfigureAwait (false);
-			_started = false;
+			lock (_stateSync)
+				_started = false;
 			}
 		finally { _gate.Release (); }
 		}
 	/// <summary>Stops and disposes the connection and subscription resources.</summary>
 	/// <returns>An asynchronous disposal operation.</returns>
-	public async ValueTask DisposeAsync ()
+	public ValueTask DisposeAsync ()
 		{
-		await StopAsync ().ConfigureAwait (false);
-		_connection.Reconnected -= RestoreSubscriptionsAsync;
-		_connection.Closed -= OnClosed;
-		await _connection.DisposeAsync ().ConfigureAwait (false);
-		_gate.Dispose ();
+		TaskCompletionSource<bool> completion;
+		lock (_stateSync)
+			{
+			if (_disposal is not null)
+				return new (_disposal);
+			_disposed = true;
+			completion = new (TaskCreationOptions.RunContinuationsAsynchronously);
+			_disposal = completion.Task;
+			}
+		_ = DisposeCoreAsync (completion);
+		return new (completion.Task);
+		}
+	private async Task DisposeCoreAsync (TaskCompletionSource<bool> completion)
+		{
+		try
+			{
+			await _gate.WaitAsync ().ConfigureAwait (false);
+			try
+				{
+				try
+					{
+					await _connection.StopAsync (CancellationToken.None).ConfigureAwait (false);
+					}
+				finally
+					{
+					_connection.Reconnected -= RestoreSubscriptionsAsync;
+					_connection.Closed -= OnClosed;
+					await _connection.DisposeAsync ().ConfigureAwait (false);
+					lock (_stateSync)
+						_started = false;
+					}
+				}
+			finally { _ = _gate.Release (); }
+			_ = completion.TrySetResult (true);
+			}
+		catch (Exception error) { _ = completion.TrySetException (error); }
+		// Keep this managed-only semaphore alive for already-queued callbacks to
+		// wake and observe disposal. AvailableWaitHandle is never requested.
 		}
 	}

@@ -2,9 +2,9 @@
 
 Independent, unofficial C# client for Easee EV chargers, with a Windows desktop workbench and an interactive test console. Copyright Â© 2026 Neil Colvin. MIT licence. This project is not affiliated with or endorsed by Easee.
 
-[GitHub repository](https://github.com/oznetmaster/EaseeChargerClient) · [HTML API documentation](https://oznetmaster.github.io/EaseeChargerClient/)
+[GitHub repository](https://github.com/oznetmaster/EaseeChargerClient) ï¿½ [HTML API documentation](https://oznetmaster.github.io/EaseeChargerClient/)
 
-Version **1.0.0** is the first stable release. The public API follows Semantic Versioning; incompatible changes require a new major version.
+Version **1.0.1** fixes streaming setup and shutdown races. The public API follows Semantic Versioning; incompatible changes require a new major version.
 
 ## Features and targets
 
@@ -131,3 +131,9 @@ SignalR uses the products hub and `SubscribeWithCurrentState`, as described by t
 The vendor omits a success-body contract for `AuthorizeCharging_StartCharging`. Successful status codes are accepted without inventing a body model. Direct OCPP `GetWorkflowStreamEndpoint` defines no event format and documents a 204 response; content is preserved as an owned stream. Supply its `traceparent` through `EaseeRequestOptions.Headers`. Partner workflow behavior still needs validation with appropriate access. This library configures OCPP through REST and does not implement an OCPP server.
 
 Position observations use nullable latitude, longitude, altitude and DOP from a related upstream IoT model. **Compatibility with an actual Easee Position payload is unverified.** The configured charger returned no location observation. No location is inferred or written. The model research and source revisions are recorded in [model-contract-evidence.json](api/model-contract-evidence.json).
+
+## Changes in 1.0.1
+
+The streaming client detects closure during subscription setup and leaves the connection restartable. Repeated or overlapping DisposeAsync calls share one shutdown task. Stop/start/subscription operations reject disposal instead of reusing closed resources. The separate EaseeSession contract still requires pending session operations to finish before its synchronous Dispose.
+
+Release packaging and publication use the [shared publication component](https://github.com/oznetmaster/BuildAutomation/tree/5d8006f140a59c8d1dd92ab70723fe8338650bd2/ReleasePublishing). Set `RELEASE_VERSION=1.0.1` and run `./build/Invoke.ps1 -Task release-assets` for local preparation; it publishes nothing. GitHub publication reuses retained, hash-verified artifacts and the repository's existing NuGet trust identity.

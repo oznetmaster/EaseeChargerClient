@@ -94,6 +94,56 @@
           ]
         }
       ]
+    },
+    "release-assets": {
+      "commands": [
+        {
+          "executable": "pwsh",
+          "arguments": [
+            "-NoProfile",
+            "-File",
+            "tools/Regenerate.ps1"
+          ]
+        },
+        {
+          "executable": "pwsh",
+          "arguments": [
+            "-NoProfile",
+            "-File",
+            "tools/Test-Documentation.ps1"
+          ]
+        },
+        {
+          "executable": "pwsh",
+          "arguments": [
+            "-NoProfile",
+            "-File",
+            "tools/Build-Documentation.ps1"
+          ]
+        },
+        {
+          "arguments": [
+            "-NoProfile",
+            "-File",
+            "${env:BUILD_AUTOMATION_COMPONENT_ROOT}/ReleasePublishing/Stage-Release.ps1",
+            "-Root",
+            ".",
+            "-Version",
+            "${env:RELEASE_VERSION}"
+          ],
+          "executable": "pwsh"
+        },
+        {
+          "arguments": [
+            "-NoProfile",
+            "-File",
+            "tools/Test-Package.ps1",
+            "-Package",
+            "artifacts/release/EaseeChargerClient.${env:RELEASE_VERSION}.nupkg"
+          ],
+          "executable": "pwsh"
+        }
+      ]
     }
   },
   "xmlDocumentation": {

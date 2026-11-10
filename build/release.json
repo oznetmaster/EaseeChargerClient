@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "name": "EaseeChargerClient",
+  "versionFile": "Directory.Build.props",
+  "versionXPath": "/Project/PropertyGroup/Version",
+  "notesFile": "release-notes/v{version}.md",
+  "packages": [
+    {
+      "id": "EaseeChargerClient",
+      "frameworks": [
+        "net472",
+        "net10.0"
+      ],
+      "project": "EaseeChargerClient/EaseeChargerClient.csproj"
+    }
+  ],
+  "applications": [
+    {
+      "name": "desktop",
+      "framework": "net10.0-windows",
+      "project": "EaseeChargerClient.App/EaseeChargerClient.App.csproj"
+    },
+    {
+      "name": "console-net10",
+      "framework": "net10.0-windows",
+      "project": "EaseeChargerClient.TestConsole/EaseeChargerClient.TestConsole.csproj"
+    },
+    {
+      "name": "console-net472",
+      "framework": "net472",
+      "project": "EaseeChargerClient.TestConsole/EaseeChargerClient.TestConsole.csproj"
+    }
+  ],
+  "documents": [
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "rawLibraries": false,
+  "libraryArchive": true,
+  "documentationArchive": "docfx_project/_site"
+}

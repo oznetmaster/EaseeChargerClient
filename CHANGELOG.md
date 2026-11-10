@@ -2,7 +2,11 @@
 
 Changes to the independent Easee client library and its companion applications are recorded here. Versions follow Semantic Versioning.
 
-## [1.0.0](https://github.com/oznetmaster/EaseeChargerClient/releases/tag/v1.0.0) — Unreleased
+## [1.0.1](https://github.com/oznetmaster/EaseeChargerClient/releases/tag/v1.0.1) — 2026-11-10
+
+- The streaming client detects closure during subscription setup and leaves the connection restartable. Repeated or overlapping DisposeAsync calls share one shutdown task. Stop/start/subscription operations reject disposal instead of reusing closed resources. The separate EaseeSession contract still requires pending session operations to finish before its synchronous Dispose.
+
+## [1.0.0](https://github.com/oznetmaster/EaseeChargerClient/releases/tag/v1.0.0) — 2026-10-20
 
 ### Added
 

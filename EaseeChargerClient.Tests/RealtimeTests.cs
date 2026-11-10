@@ -38,6 +38,28 @@ public sealed class RealtimeTests
 		Assert.That (connection.Products, Is.EqualTo (new[] { "A", "A" }));
 		}
 	[Test]
+	public async Task ClosureDuringSubscriptionDoesNotOverwriteClosedState ()
+		{
+		var connection = new FakeConnection { CloseDuringSubscribe = true };
+		await using var client = new EaseeRealtimeClient (connection, ["A"]);
+		await Assert.ThrowsAsync<IOException> (async () => await client.StartAsync ());
+		await client.StartAsync ();
+		Assert.That (connection.Starts, Is.EqualTo (2));
+		}
+	[Test]
+	public async Task RepeatedDisposalSharesCompletionAndRejectsRestart ()
+		{
+		var connection = new FakeConnection ();
+		var client = new EaseeRealtimeClient (connection, ["A"]);
+		await client.StartAsync ();
+		Task first = client.DisposeAsync ().AsTask ();
+		Task second = client.DisposeAsync ().AsTask ();
+		Assert.That (second, Is.SameAs (first));
+		await Task.WhenAll (first, second);
+		await Assert.ThrowsAsync<ObjectDisposedException> (async () => await client.StartAsync ());
+		Assert.That (connection.Disposals, Is.EqualTo (1));
+		}
+	[Test]
 	public void ObservationWireNamesAndStringValuesMatchTheStreamingContract ()
 		{
 		var update = EaseeJson.Deserialize<EaseeProductUpdate> ("{\"mid\":\"TEST\",\"dataType\":3,\"id\":21,\"timestamp\":\"2026-10-20T12:00:00Z\",\"value\":\"0.0\"}")!;
@@ -58,12 +80,23 @@ public sealed class RealtimeTests
 			{
 			get; set;
 			}
-		public Task StartAsync (CancellationToken cancellationToken) => Task.CompletedTask;
+		public bool CloseDuringSubscribe;
+		public int Starts, Disposals;
+		public Task StartAsync (CancellationToken cancellationToken)
+			{
+			Starts++;
+			return Task.CompletedTask;
+			}
 		public Task SubscribeAsync (string serial, CancellationToken cancellationToken)
 			{
 			if (FailSubscribe)
 				throw new IOException ();
 			Products.Add (serial);
+			if (CloseDuringSubscribe)
+				{
+				CloseDuringSubscribe = false;
+				Closed?.Invoke ();
+				}
 			return Task.CompletedTask;
 			}
 		public Task StopAsync (CancellationToken cancellationToken)
@@ -73,6 +106,10 @@ public sealed class RealtimeTests
 			}
 		public Task ReconnectAsync () => Reconnected?.Invoke () ?? Task.CompletedTask;
 		public void Close () => Closed?.Invoke ();
-		public ValueTask DisposeAsync () => default;
+		public ValueTask DisposeAsync ()
+			{
+			Disposals++;
+			return default;
+			}
 		}
 	}
