@@ -137,3 +137,7 @@ Position observations use nullable latitude, longitude, altitude and DOP from a 
 The streaming client detects closure during subscription setup and leaves the connection restartable. Repeated or overlapping DisposeAsync calls share one shutdown task. Stop/start/subscription operations reject disposal instead of reusing closed resources. The separate EaseeSession contract still requires pending session operations to finish before its synchronous Dispose.
 
 Release packaging and publication use the [shared publication component](https://github.com/oznetmaster/BuildAutomation/tree/5d8006f140a59c8d1dd92ab70723fe8338650bd2/ReleasePublishing). Set `RELEASE_VERSION=1.0.1` and run `./build/Invoke.ps1 -Task release-assets` for local preparation; it publishes nothing. GitHub publication reuses retained, hash-verified artifacts and the repository's existing NuGet trust identity.
+
+## Debugging NuGet packages
+
+The release workflow publishes matching portable debugging symbols as separate `.snupkg` files on GitHub and NuGet's symbol server. They are optional debugger downloads and do not enlarge the normal library package or enable runtime logging. This policy applies to releases built with the updated workflow; earlier versions may not include symbols. See [the build documentation](build/README.md#symbol-packages) and [Microsoft's symbol-server setup](https://learn.microsoft.com/en-us/nuget/create-packages/symbol-packages-snupkg#nugetorg-symbol-server).
